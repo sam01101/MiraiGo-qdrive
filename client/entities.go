@@ -1,9 +1,9 @@
 package client
 
 import (
+	"github.com/pkg/errors"
 	"github.com/sam01101/MiraiGo-qdrive/binary/jce"
 	"github.com/sam01101/MiraiGo-qdrive/message"
-	"github.com/pkg/errors"
 )
 
 var (

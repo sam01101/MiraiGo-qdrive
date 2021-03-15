@@ -7,6 +7,7 @@ import (
 	"io"
 	"os"
 
+	"github.com/pkg/errors"
 	"github.com/sam01101/MiraiGo-qdrive/binary"
 	"github.com/sam01101/MiraiGo-qdrive/client/pb"
 	"github.com/sam01101/MiraiGo-qdrive/client/pb/cmd0x346"
@@ -15,7 +16,6 @@ import (
 	"github.com/sam01101/MiraiGo-qdrive/message"
 	"github.com/sam01101/MiraiGo-qdrive/protocol/packets"
 	"github.com/sam01101/MiraiGo-qdrive/utils"
-	"github.com/pkg/errors"
 	"google.golang.org/protobuf/proto"
 )
 

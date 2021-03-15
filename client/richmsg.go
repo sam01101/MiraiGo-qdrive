@@ -4,11 +4,11 @@ import (
 	"math/rand"
 	"time"
 
+	"github.com/pkg/errors"
 	"github.com/sam01101/MiraiGo-qdrive/client/pb/oidb"
 	"github.com/sam01101/MiraiGo-qdrive/message"
 	"github.com/sam01101/MiraiGo-qdrive/protocol/packets"
 	"github.com/sam01101/MiraiGo-qdrive/utils"
-	"github.com/pkg/errors"
 	"google.golang.org/protobuf/proto"
 )
 

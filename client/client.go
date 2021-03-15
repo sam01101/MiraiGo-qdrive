@@ -16,6 +16,8 @@ import (
 	"sync/atomic"
 	"time"
 
+	jsoniter "github.com/json-iterator/go"
+	"github.com/pkg/errors"
 	"github.com/sam01101/MiraiGo-qdrive/binary"
 	"github.com/sam01101/MiraiGo-qdrive/binary/jce"
 	"github.com/sam01101/MiraiGo-qdrive/client/pb/msg"
@@ -23,8 +25,6 @@ import (
 	"github.com/sam01101/MiraiGo-qdrive/protocol/crypto"
 	"github.com/sam01101/MiraiGo-qdrive/protocol/packets"
 	"github.com/sam01101/MiraiGo-qdrive/utils"
-	jsoniter "github.com/json-iterator/go"
-	"github.com/pkg/errors"
 )
 
 var json = jsoniter.ConfigFastest

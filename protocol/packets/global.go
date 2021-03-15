@@ -3,9 +3,9 @@ package packets
 import (
 	"strconv"
 
+	"github.com/pkg/errors"
 	"github.com/sam01101/MiraiGo-qdrive/binary"
 	"github.com/sam01101/MiraiGo-qdrive/protocol/crypto"
-	"github.com/pkg/errors"
 )
 
 var ErrUnknownFlag = errors.New("unknown flag")

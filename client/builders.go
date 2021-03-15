@@ -6,6 +6,7 @@ import (
 	"math/rand"
 	"time"
 
+	"github.com/golang/protobuf/proto"
 	"github.com/sam01101/MiraiGo-qdrive/binary"
 	"github.com/sam01101/MiraiGo-qdrive/binary/jce"
 	"github.com/sam01101/MiraiGo-qdrive/client/pb"
@@ -19,7 +20,6 @@ import (
 	"github.com/sam01101/MiraiGo-qdrive/protocol/crypto"
 	"github.com/sam01101/MiraiGo-qdrive/protocol/packets"
 	"github.com/sam01101/MiraiGo-qdrive/protocol/tlv"
-	"github.com/golang/protobuf/proto"
 )
 
 var (

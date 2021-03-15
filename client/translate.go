@@ -1,10 +1,10 @@
 package client
 
 import (
-	"github.com/sam01101/MiraiGo-qdrive/client/pb/oidb"
-	"github.com/sam01101/MiraiGo-qdrive/protocol/packets"
 	"github.com/golang/protobuf/proto"
 	"github.com/pkg/errors"
+	"github.com/sam01101/MiraiGo-qdrive/client/pb/oidb"
+	"github.com/sam01101/MiraiGo-qdrive/protocol/packets"
 )
 
 func (c *QQClient) buildTranslatePacket(src, dst, text string) (uint16, []byte) {

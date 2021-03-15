@@ -4,10 +4,10 @@ import (
 	"math/rand"
 	"time"
 
+	"github.com/golang/protobuf/proto"
 	"github.com/sam01101/MiraiGo-qdrive/client/pb/msg"
 	"github.com/sam01101/MiraiGo-qdrive/message"
 	"github.com/sam01101/MiraiGo-qdrive/protocol/packets"
-	"github.com/golang/protobuf/proto"
 )
 
 func (c *QQClient) SendPrivateMessage(target int64, m *message.SendingMessage) *message.PrivateMessage {

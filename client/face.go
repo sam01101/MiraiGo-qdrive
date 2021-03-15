@@ -3,10 +3,10 @@ package client
 import (
 	"fmt"
 
-	"github.com/sam01101/MiraiGo-qdrive/client/pb/faceroam"
-	"github.com/sam01101/MiraiGo-qdrive/protocol/packets"
 	"github.com/golang/protobuf/proto"
 	"github.com/pkg/errors"
+	"github.com/sam01101/MiraiGo-qdrive/client/pb/faceroam"
+	"github.com/sam01101/MiraiGo-qdrive/protocol/packets"
 )
 
 type CustomFace struct {

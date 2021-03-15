@@ -5,14 +5,14 @@ import (
 	"sync"
 	"time"
 
+	"github.com/golang/protobuf/proto"
+	"github.com/pkg/errors"
 	"github.com/sam01101/MiraiGo-qdrive/binary/jce"
 	"github.com/sam01101/MiraiGo-qdrive/client/pb/msf"
 	"github.com/sam01101/MiraiGo-qdrive/client/pb/msg"
 	"github.com/sam01101/MiraiGo-qdrive/client/pb/oidb"
 	"github.com/sam01101/MiraiGo-qdrive/message"
 	"github.com/sam01101/MiraiGo-qdrive/protocol/packets"
-	"github.com/golang/protobuf/proto"
-	"github.com/pkg/errors"
 )
 
 func init() {

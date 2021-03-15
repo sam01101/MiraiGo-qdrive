@@ -7,11 +7,11 @@ import (
 
 	"github.com/sam01101/MiraiGo-qdrive/client/pb/msgtype0x210"
 
+	"github.com/pkg/errors"
 	"github.com/sam01101/MiraiGo-qdrive/binary"
 	"github.com/sam01101/MiraiGo-qdrive/binary/jce"
 	"github.com/sam01101/MiraiGo-qdrive/client/pb"
 	"github.com/sam01101/MiraiGo-qdrive/client/pb/notify"
-	"github.com/pkg/errors"
 	"google.golang.org/protobuf/proto"
 )
 

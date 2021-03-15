@@ -10,6 +10,8 @@ import (
 	"sync"
 	"time"
 
+	"github.com/golang/protobuf/proto"
+	"github.com/pkg/errors"
 	"github.com/sam01101/MiraiGo-qdrive/binary"
 	"github.com/sam01101/MiraiGo-qdrive/binary/jce"
 	"github.com/sam01101/MiraiGo-qdrive/client/pb"
@@ -21,8 +23,6 @@ import (
 	"github.com/sam01101/MiraiGo-qdrive/client/pb/qweb"
 	"github.com/sam01101/MiraiGo-qdrive/client/pb/structmsg"
 	"github.com/sam01101/MiraiGo-qdrive/utils"
-	"github.com/golang/protobuf/proto"
-	"github.com/pkg/errors"
 )
 
 var (
