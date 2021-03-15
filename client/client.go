@@ -315,30 +315,30 @@ func (c *QQClient) init() {
 	}
 	c.Online = true
 	_ = c.registerClient()
-	c.groupSysMsgCache, _ = c.GetGroupSystemMessages()
+	//c.groupSysMsgCache, _ = c.GetGroupSystemMessages()
 	if !c.heartbeatEnabled {
 		go c.doHeartbeat()
 	}
-	_ = c.RefreshStatus()
-	seq, pkt := c.buildGetMessageRequestPacket(msg.SyncFlag_START, time.Now().Unix())
-	_, _ = c.sendAndWait(seq, pkt, requestParams{"used_reg_proxy": true, "init": true})
-	c.stat.once.Do(func() {
-		c.OnGroupMessage(func(_ *QQClient, _ *message.GroupMessage) {
-			c.stat.MessageReceived++
-			c.stat.LastMessageTime = time.Now().Unix()
-		})
-		c.OnPrivateMessage(func(_ *QQClient, _ *message.PrivateMessage) {
-			c.stat.MessageReceived++
-			c.stat.LastMessageTime = time.Now().Unix()
-		})
-		c.OnTempMessage(func(_ *QQClient, _ *message.TempMessage) {
-			c.stat.MessageReceived++
-			c.stat.LastMessageTime = time.Now().Unix()
-		})
-		c.onGroupMessageReceipt("internal", func(_ *QQClient, _ *groupMessageReceiptEvent) {
-			c.stat.MessageSent++
-		})
-	})
+	//_ = c.RefreshStatus()
+	//seq, pkt := c.buildGetMessageRequestPacket(msg.SyncFlag_START, time.Now().Unix())
+	//_, _ = c.sendAndWait(seq, pkt, requestParams{"used_reg_proxy": true, "init": true})
+	//c.stat.once.Do(func() {
+	//	c.OnGroupMessage(func(_ *QQClient, _ *message.GroupMessage) {
+	//		c.stat.MessageReceived++
+	//		c.stat.LastMessageTime = time.Now().Unix()
+	//	})
+	//	c.OnPrivateMessage(func(_ *QQClient, _ *message.PrivateMessage) {
+	//		c.stat.MessageReceived++
+	//		c.stat.LastMessageTime = time.Now().Unix()
+	//	})
+	//	c.OnTempMessage(func(_ *QQClient, _ *message.TempMessage) {
+	//		c.stat.MessageReceived++
+	//		c.stat.LastMessageTime = time.Now().Unix()
+	//	})
+	//	c.onGroupMessageReceipt("internal", func(_ *QQClient, _ *groupMessageReceiptEvent) {
+	//		c.stat.MessageSent++
+	//	})
+	//})
 }
 
 func (c *QQClient) GetVipInfo(target int64) (*VipInfo, error) {

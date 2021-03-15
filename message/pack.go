@@ -159,11 +159,6 @@ func (e *ForwardElement) Pack() (r []*msg.Elem) {
 			MsgResId:  []byte{},
 		},
 	})
-	r = append(r, &msg.Elem{
-		Text: &msg.Text{
-			Str: proto.String("你的QQ暂不支持查看[转发多条消息]，请期待后续版本。"),
-		},
-	})
 	return
 }
 

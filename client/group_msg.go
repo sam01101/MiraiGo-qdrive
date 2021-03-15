@@ -75,9 +75,15 @@ func (c *QQClient) SendGroupMessage(groupCode int64, m *message.SendingMessage, 
 
 // SendGroupForwardMessage 发送群合并转发消息
 func (c *QQClient) SendGroupForwardMessage(groupCode int64, m *message.ForwardMessage) *message.GroupMessage {
+	fwdMsg := c.UploadGroupForwardMessage(0, m)
 	return c.sendGroupMessage(groupCode, true,
-		&message.SendingMessage{Elements: []message.IMessageElement{c.UploadGroupForwardMessage(groupCode, m)}},
+		&message.SendingMessage{Elements: []message.IMessageElement{fwdMsg}},
 	)
+}
+
+// UploadForwardMessage 上传群合并转发消息
+func (c *QQClient) UploadForwardMessage(m *message.ForwardMessage) *message.ForwardElement {
+	return c.UploadGroupForwardMessage(0, m)
 }
 
 // GetGroupMessages 从服务器获取历史信息
@@ -205,11 +211,8 @@ func (c *QQClient) UploadGroupForwardMessage(groupCode int64, m *message.Forward
 	for i, ip := range rsp.Uint32UpIp {
 		err := c.highwayUpload(uint32(ip), int(rsp.Uint32UpPort[i]), rsp.MsgSig, body, 27)
 		if err == nil {
-			var pv string
-			for i := 0; i < int(math.Min(4, float64(len(m.Nodes)))); i++ {
-				pv += fmt.Sprintf(`<title size="26" color="#4285F4">%s: %s</title>`, XmlEscape(m.Nodes[i].SenderName), XmlEscape(message.ToReadableString(m.Nodes[i].Message)))
-			}
-			return genForwardTemplate(rsp.MsgResid, pv, "群聊的聊天记录", "[聊天记录]", "聊天记录", fmt.Sprintf("查看 %d 条转发消息", len(m.Nodes)), ts, items)
+			pv := fmt.Sprintf(`<title size="26" color="#777777">目前有 %v 个区块</title>`, XmlEscape(strconv.Itoa(len(m.Nodes))))
+			return genForwardTemplate(rsp.MsgResid, pv, "上传的聊天记录", "[上传记录]", "聊天记录", "请勿打开上传区块, 卡死后果自负", ts, items)
 		}
 	}
 	return nil
