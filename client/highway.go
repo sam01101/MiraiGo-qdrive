@@ -16,9 +16,9 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/Mrs4s/MiraiGo/binary"
-	"github.com/Mrs4s/MiraiGo/client/pb"
-	"github.com/Mrs4s/MiraiGo/utils"
+	"github.com/sam01101/MiraiGo-qdrive/binary"
+	"github.com/sam01101/MiraiGo-qdrive/client/pb"
+	"github.com/sam01101/MiraiGo-qdrive/utils"
 	"github.com/pkg/errors"
 	"google.golang.org/protobuf/proto"
 )

@@ -9,7 +9,7 @@ import (
 	"io"
 	"net"
 
-	"github.com/Mrs4s/MiraiGo/utils"
+	"github.com/sam01101/MiraiGo-qdrive/utils"
 )
 
 func ZlibUncompress(src []byte) []byte {

@@ -1,7 +1,7 @@
 package tlv
 
 import (
-	"github.com/Mrs4s/MiraiGo/binary"
+	"github.com/sam01101/MiraiGo-qdrive/binary"
 )
 
 func T100(ssoVersion, protocol, mainSigMap uint32) []byte {

@@ -3,7 +3,7 @@ package packets
 import (
 	"strconv"
 
-	"github.com/Mrs4s/MiraiGo/binary"
+	"github.com/sam01101/MiraiGo-qdrive/binary"
 )
 
 func BuildLoginPacket(uin int64, bodyType byte, key, body, extraData []byte) []byte {

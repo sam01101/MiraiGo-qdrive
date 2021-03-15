@@ -4,7 +4,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/Mrs4s/MiraiGo/binary"
+	"github.com/sam01101/MiraiGo-qdrive/binary"
 )
 
 func T511(domains []string) []byte {

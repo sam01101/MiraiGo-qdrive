@@ -3,12 +3,12 @@ package client
 import (
 	"fmt"
 
-	"github.com/Mrs4s/MiraiGo/binary"
-	"github.com/Mrs4s/MiraiGo/client/pb/longmsg"
-	"github.com/Mrs4s/MiraiGo/client/pb/msg"
-	"github.com/Mrs4s/MiraiGo/client/pb/multimsg"
-	"github.com/Mrs4s/MiraiGo/protocol/packets"
-	"github.com/Mrs4s/MiraiGo/utils"
+	"github.com/sam01101/MiraiGo-qdrive/binary"
+	"github.com/sam01101/MiraiGo-qdrive/client/pb/longmsg"
+	"github.com/sam01101/MiraiGo-qdrive/client/pb/msg"
+	"github.com/sam01101/MiraiGo-qdrive/client/pb/multimsg"
+	"github.com/sam01101/MiraiGo-qdrive/protocol/packets"
+	"github.com/sam01101/MiraiGo-qdrive/utils"
 	"github.com/pkg/errors"
 	"google.golang.org/protobuf/proto"
 )

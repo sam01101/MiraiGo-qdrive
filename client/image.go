@@ -9,11 +9,11 @@ import (
 	"os"
 	"strings"
 
-	"github.com/Mrs4s/MiraiGo/binary"
-	"github.com/Mrs4s/MiraiGo/client/pb"
-	"github.com/Mrs4s/MiraiGo/message"
-	"github.com/Mrs4s/MiraiGo/protocol/packets"
-	"github.com/Mrs4s/MiraiGo/utils"
+	"github.com/sam01101/MiraiGo-qdrive/binary"
+	"github.com/sam01101/MiraiGo-qdrive/client/pb"
+	"github.com/sam01101/MiraiGo-qdrive/message"
+	"github.com/sam01101/MiraiGo-qdrive/protocol/packets"
+	"github.com/sam01101/MiraiGo-qdrive/utils"
 	"github.com/golang/protobuf/proto"
 	"github.com/pkg/errors"
 )

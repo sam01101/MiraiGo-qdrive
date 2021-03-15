@@ -1,8 +1,8 @@
 package client
 
 import (
-	"github.com/Mrs4s/MiraiGo/client/pb/oidb"
-	"github.com/Mrs4s/MiraiGo/protocol/packets"
+	"github.com/sam01101/MiraiGo-qdrive/client/pb/oidb"
+	"github.com/sam01101/MiraiGo-qdrive/protocol/packets"
 	"github.com/golang/protobuf/proto"
 	"github.com/pkg/errors"
 )

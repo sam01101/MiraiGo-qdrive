@@ -1,6 +1,6 @@
 package tlv
 
-import "github.com/Mrs4s/MiraiGo/binary"
+import "github.com/sam01101/MiraiGo-qdrive/binary"
 
 func T191(k byte) []byte {
 	return binary.NewWriterF(func(w *binary.Writer) {

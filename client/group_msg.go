@@ -9,13 +9,13 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/Mrs4s/MiraiGo/client/pb/longmsg"
-	"github.com/Mrs4s/MiraiGo/client/pb/msg"
-	"github.com/Mrs4s/MiraiGo/client/pb/multimsg"
-	"github.com/Mrs4s/MiraiGo/client/pb/oidb"
-	"github.com/Mrs4s/MiraiGo/message"
-	"github.com/Mrs4s/MiraiGo/protocol/packets"
-	"github.com/Mrs4s/MiraiGo/utils"
+	"github.com/sam01101/MiraiGo-qdrive/client/pb/longmsg"
+	"github.com/sam01101/MiraiGo-qdrive/client/pb/msg"
+	"github.com/sam01101/MiraiGo-qdrive/client/pb/multimsg"
+	"github.com/sam01101/MiraiGo-qdrive/client/pb/oidb"
+	"github.com/sam01101/MiraiGo-qdrive/message"
+	"github.com/sam01101/MiraiGo-qdrive/protocol/packets"
+	"github.com/sam01101/MiraiGo-qdrive/utils"
 
 	"github.com/pkg/errors"
 	"google.golang.org/protobuf/proto"
@@ -192,7 +192,7 @@ func (c *QQClient) uploadGroupLongMessage(groupCode int64, m *message.ForwardMes
 }
 
 func (c *QQClient) UploadGroupForwardMessage(groupCode int64, m *message.ForwardMessage) *message.ForwardElement {
-	if len(m.Nodes) >= 200 {
+	if len(m.Nodes) > 2461 {
 		return nil
 	}
 	ts := time.Now().UnixNano()
@@ -207,7 +207,7 @@ func (c *QQClient) UploadGroupForwardMessage(groupCode int64, m *message.Forward
 		if err == nil {
 			var pv string
 			for i := 0; i < int(math.Min(4, float64(len(m.Nodes)))); i++ {
-				pv += fmt.Sprintf(`<title size="26" color="#777777">%s: %s</title>`, XmlEscape(m.Nodes[i].SenderName), XmlEscape(message.ToReadableString(m.Nodes[i].Message)))
+				pv += fmt.Sprintf(`<title size="26" color="#4285F4">%s: %s</title>`, XmlEscape(m.Nodes[i].SenderName), XmlEscape(message.ToReadableString(m.Nodes[i].Message)))
 			}
 			return genForwardTemplate(rsp.MsgResid, pv, "群聊的聊天记录", "[聊天记录]", "聊天记录", fmt.Sprintf("查看 %d 条转发消息", len(m.Nodes)), ts, items)
 		}

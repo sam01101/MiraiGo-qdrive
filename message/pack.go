@@ -3,8 +3,8 @@ package message
 import (
 	"encoding/hex"
 
-	"github.com/Mrs4s/MiraiGo/binary"
-	"github.com/Mrs4s/MiraiGo/client/pb/msg"
+	"github.com/sam01101/MiraiGo-qdrive/binary"
+	"github.com/sam01101/MiraiGo-qdrive/client/pb/msg"
 	"github.com/golang/protobuf/proto"
 )
 

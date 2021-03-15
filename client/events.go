@@ -5,7 +5,7 @@ import (
 	"runtime/debug"
 	"sync"
 
-	"github.com/Mrs4s/MiraiGo/message"
+	"github.com/sam01101/MiraiGo-qdrive/message"
 )
 
 type eventHandlers struct {

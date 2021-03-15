@@ -3,9 +3,9 @@ package client
 import (
 	"fmt"
 
-	"github.com/Mrs4s/MiraiGo/binary"
-	"github.com/Mrs4s/MiraiGo/client/pb/richmedia"
-	"github.com/Mrs4s/MiraiGo/utils"
+	"github.com/sam01101/MiraiGo-qdrive/binary"
+	"github.com/sam01101/MiraiGo-qdrive/client/pb/richmedia"
+	"github.com/sam01101/MiraiGo-qdrive/utils"
 	"github.com/golang/protobuf/proto"
 	"github.com/pkg/errors"
 )

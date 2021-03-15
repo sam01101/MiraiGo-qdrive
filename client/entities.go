@@ -1,8 +1,8 @@
 package client
 
 import (
-	"github.com/Mrs4s/MiraiGo/binary/jce"
-	"github.com/Mrs4s/MiraiGo/message"
+	"github.com/sam01101/MiraiGo-qdrive/binary/jce"
+	"github.com/sam01101/MiraiGo-qdrive/message"
 	"github.com/pkg/errors"
 )
 

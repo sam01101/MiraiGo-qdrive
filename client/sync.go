@@ -5,12 +5,12 @@ import (
 	"sync"
 	"time"
 
-	"github.com/Mrs4s/MiraiGo/binary/jce"
-	"github.com/Mrs4s/MiraiGo/client/pb/msf"
-	"github.com/Mrs4s/MiraiGo/client/pb/msg"
-	"github.com/Mrs4s/MiraiGo/client/pb/oidb"
-	"github.com/Mrs4s/MiraiGo/message"
-	"github.com/Mrs4s/MiraiGo/protocol/packets"
+	"github.com/sam01101/MiraiGo-qdrive/binary/jce"
+	"github.com/sam01101/MiraiGo-qdrive/client/pb/msf"
+	"github.com/sam01101/MiraiGo-qdrive/client/pb/msg"
+	"github.com/sam01101/MiraiGo-qdrive/client/pb/oidb"
+	"github.com/sam01101/MiraiGo-qdrive/message"
+	"github.com/sam01101/MiraiGo-qdrive/protocol/packets"
 	"github.com/golang/protobuf/proto"
 	"github.com/pkg/errors"
 )

@@ -3,8 +3,8 @@ package packets
 import (
 	"strconv"
 
-	"github.com/Mrs4s/MiraiGo/binary"
-	"github.com/Mrs4s/MiraiGo/protocol/crypto"
+	"github.com/sam01101/MiraiGo-qdrive/binary"
+	"github.com/sam01101/MiraiGo-qdrive/protocol/crypto"
 	"github.com/pkg/errors"
 )
 

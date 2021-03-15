@@ -8,9 +8,9 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/Mrs4s/MiraiGo/binary"
-	"github.com/Mrs4s/MiraiGo/client/pb/msg"
-	"github.com/Mrs4s/MiraiGo/utils"
+	"github.com/sam01101/MiraiGo-qdrive/binary"
+	"github.com/sam01101/MiraiGo-qdrive/client/pb/msg"
+	"github.com/sam01101/MiraiGo-qdrive/utils"
 	"github.com/golang/protobuf/proto"
 	jsoniter "github.com/json-iterator/go"
 )
