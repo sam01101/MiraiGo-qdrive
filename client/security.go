@@ -8,7 +8,7 @@ import (
 )
 
 func init() {
-	decoders["OidbSvc.0xbcb_0"] = decodeUrlCheckResponse
+	//decoders["OidbSvc.0xbcb_0"] = decodeUrlCheckResponse
 }
 
 type UrlSecurityLevel int

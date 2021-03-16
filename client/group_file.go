@@ -58,11 +58,11 @@ type (
 var fileSingleFlight = sync.Map{}
 
 func init() {
-	decoders["OidbSvc.0x6d8_1"] = decodeOIDB6d81Response
-	decoders["OidbSvc.0x6d6_0"] = decodeOIDB6d60Response
-	decoders["OidbSvc.0x6d6_2"] = decodeOIDB6d62Response
-	decoders["OidbSvc.0x6d6_3"] = decodeOIDB6d63Response
-	decoders["OidbSvc.0x6d9_4"] = ignoreDecoder
+	//decoders["OidbSvc.0x6d8_1"] = decodeOIDB6d81Response
+	//decoders["OidbSvc.0x6d6_0"] = decodeOIDB6d60Response
+	//decoders["OidbSvc.0x6d6_2"] = decodeOIDB6d62Response
+	//decoders["OidbSvc.0x6d6_3"] = decodeOIDB6d63Response
+	//decoders["OidbSvc.0x6d9_4"] = ignoreDecoder
 }
 
 func (c *QQClient) GetGroupFileSystem(groupCode int64) (fs *GroupFileSystem, err error) {

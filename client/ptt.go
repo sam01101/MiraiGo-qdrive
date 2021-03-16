@@ -158,6 +158,16 @@ func (c *QQClient) GetShortVideoUrl(uuid, md5 []byte) string {
 	return i.(string)
 }
 
+func (c *QQClient) GetShortVideoUrlSeq(uuid, md5 []byte) uint16 {
+	seq, pkt := c.buildPttShortVideoDownReqPacket(uuid, md5)
+	err := c.send(pkt)
+	if err != nil {
+		c.Error("Send short video url req failed: %v", err)
+		return 0
+	}
+	return seq
+}
+
 // PttStore.GroupPttUp
 func (c *QQClient) buildGroupPttStorePacket(groupCode int64, md5 []byte, size, codec, voiceLength int32) (uint16, []byte) {
 	seq := c.nextSeq()

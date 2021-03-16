@@ -19,7 +19,7 @@ import (
 )
 
 func init() {
-	decoders["ImgStore.GroupPicUp"] = decodeGroupImageStoreResponse
+	//decoders["ImgStore.GroupPicUp"] = decodeGroupImageStoreResponse
 }
 
 func (c *QQClient) UploadGroupImage(groupCode int64, img io.ReadSeeker) (*message.GroupImageElement, error) {

@@ -8,7 +8,7 @@ import (
 )
 
 func init() {
-	decoders["OfflineFilleHandleSvr.pb_ftn_CMD_REQ_APPLY_DOWNLOAD-1200"] = decodeOfflineFileDownloadResponse
+	//decoders["OfflineFilleHandleSvr.pb_ftn_CMD_REQ_APPLY_DOWNLOAD-1200"] = decodeOfflineFileDownloadResponse
 }
 
 func (c *QQClient) buildOfflineFileDownloadRequestPacket(uuid []byte) (uint16, []byte) {

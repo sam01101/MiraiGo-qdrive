@@ -97,6 +97,7 @@ type ShortVideoElement struct {
 	Md5       []byte
 	ThumbMd5  []byte
 	Url       string
+	Seq       uint16
 }
 
 type ServiceElement struct {

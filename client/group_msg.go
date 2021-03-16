@@ -22,12 +22,12 @@ import (
 )
 
 func init() {
-	decoders["OnlinePush.PbPushGroupMsg"] = decodeGroupMessagePacket
-	decoders["MessageSvc.PbSendMsg"] = decodeMsgSendResponse
-	decoders["MessageSvc.PbGetGroupMsg"] = decodeGetGroupMsgResponse
-	decoders["OidbSvc.0x8a7_0"] = decodeAtAllRemainResponse
-	decoders["OidbSvc.0xeac_1"] = decodeEssenceMsgResponse
-	decoders["OidbSvc.0xeac_2"] = decodeEssenceMsgResponse
+	//decoders["OnlinePush.PbPushGroupMsg"] = decodeGroupMessagePacket
+	//decoders["MessageSvc.PbSendMsg"] = decodeMsgSendResponse
+	//decoders["MessageSvc.PbGetGroupMsg"] = decodeGetGroupMsgResponse
+	//decoders["OidbSvc.0x8a7_0"] = decodeAtAllRemainResponse
+	//decoders["OidbSvc.0xeac_1"] = decodeEssenceMsgResponse
+	//decoders["OidbSvc.0xeac_2"] = decodeEssenceMsgResponse
 }
 
 // SendGroupMessage 发送群消息

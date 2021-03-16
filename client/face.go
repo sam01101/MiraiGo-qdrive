@@ -15,7 +15,7 @@ type CustomFace struct {
 }
 
 func init() {
-	decoders["Faceroam.OpReq"] = decodeFaceroamResponse
+	//decoders["Faceroam.OpReq"] = decodeFaceroamResponse
 }
 
 func (c *QQClient) GetCustomFaces() ([]*CustomFace, error) {

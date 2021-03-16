@@ -16,16 +16,16 @@ import (
 )
 
 func init() {
-	decoders["StatSvc.GetDevLoginInfo"] = decodeDevListResponse
-	decoders["StatSvc.SvcReqMSFLoginNotify"] = decodeLoginNotifyPacket
-	decoders["RegPrxySvc.getOffMsg"] = ignoreDecoder
-	decoders["RegPrxySvc.GetMsgV2"] = ignoreDecoder
-	decoders["RegPrxySvc.PbGetMsg"] = ignoreDecoder
-	decoders["RegPrxySvc.NoticeEnd"] = ignoreDecoder
-	decoders["RegPrxySvc.PushParam"] = decodePushParamPacket
-	decoders["RegPrxySvc.PbSyncMsg"] = decodeMsgSyncResponse
-	decoders["PbMessageSvc.PbMsgReadedReport"] = decodeMsgReadedResponse
-	decoders["MessageSvc.PushReaded"] = ignoreDecoder
+	//decoders["StatSvc.GetDevLoginInfo"] = decodeDevListResponse
+	//decoders["StatSvc.SvcReqMSFLoginNotify"] = decodeLoginNotifyPacket
+	//decoders["RegPrxySvc.getOffMsg"] = ignoreDecoder
+	//decoders["RegPrxySvc.GetMsgV2"] = ignoreDecoder
+	//decoders["RegPrxySvc.PbGetMsg"] = ignoreDecoder
+	//decoders["RegPrxySvc.NoticeEnd"] = ignoreDecoder
+	//decoders["RegPrxySvc.PushParam"] = decodePushParamPacket
+	//decoders["RegPrxySvc.PbSyncMsg"] = decodeMsgSyncResponse
+	//decoders["PbMessageSvc.PbMsgReadedReport"] = decodeMsgReadedResponse
+	//decoders["MessageSvc.PushReaded"] = ignoreDecoder
 }
 
 type (

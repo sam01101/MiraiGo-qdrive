@@ -53,6 +53,7 @@ type QQClient struct {
 
 	handlers        HandlerMap
 	waiters         sync.Map
+	urlStore        sync.Map
 	servers         []*net.TCPAddr
 	currServerIndex int
 	retryTimes      int
@@ -101,6 +102,11 @@ type QQClient struct {
 	groupListLock sync.Mutex
 }
 
+type T struct {
+	Response interface{}
+	Error    error
+}
+
 type loginSigInfo struct {
 	loginBitmap uint64
 	tgt         []byte
@@ -128,30 +134,30 @@ type handlerInfo struct {
 }
 
 var decoders = map[string]func(*QQClient, *incomingPacketInfo, []byte) (interface{}, error){
-	"wtlogin.login":                                decodeLoginResponse,
-	"wtlogin.exchange_emp":                         decodeExchangeEmpResponse,
-	"StatSvc.register":                             decodeClientRegisterResponse,
-	"StatSvc.ReqMSFOffline":                        decodeMSFOfflinePacket,
-	"MessageSvc.PushNotify":                        decodeSvcNotify,
-	"OnlinePush.ReqPush":                           decodeOnlinePushReqPacket,
-	"OnlinePush.PbPushTransMsg":                    decodeOnlinePushTransPacket,
-	"ConfigPushSvc.PushReq":                        decodePushReqPacket,
-	"MessageSvc.PbGetMsg":                          decodeMessageSvcPacket,
-	"MessageSvc.PushForceOffline":                  decodeForceOfflinePacket,
-	"PbMessageSvc.PbMsgWithDraw":                   decodeMsgWithDrawResponse,
-	"friendlist.getFriendGroupList":                decodeFriendGroupListResponse,
-	"friendlist.GetTroopListReqV2":                 decodeGroupListResponse,
-	"friendlist.GetTroopMemberListReq":             decodeGroupMemberListResponse,
-	"group_member_card.get_group_member_card_info": decodeGroupMemberInfoResponse,
-	"PttStore.GroupPttUp":                          decodeGroupPttStoreResponse,
-	"LongConn.OffPicUp":                            decodeOffPicUpResponse,
-	"ProfileService.Pb.ReqSystemMsgNew.Group":      decodeSystemMsgGroupPacket,
-	"ProfileService.Pb.ReqSystemMsgNew.Friend":     decodeSystemMsgFriendPacket,
-	"OidbSvc.0xe07_0":                              decodeImageOcrResponse,
-	"OidbSvc.0xd79":                                decodeWordSegmentation,
-	"OidbSvc.0x990":                                decodeTranslateResponse,
-	"SummaryCard.ReqSummaryCard":                   decodeSummaryCardResponse,
-	"LightAppSvc.mini_app_info.GetAppInfoById":     decodeAppInfoResponse,
+	"wtlogin.login":        decodeLoginResponse,
+	"wtlogin.exchange_emp": decodeExchangeEmpResponse,
+	"StatSvc.register":     decodeClientRegisterResponse,
+	//"StatSvc.ReqMSFOffline":                        decodeMSFOfflinePacket,
+	//"MessageSvc.PushNotify":                        decodeSvcNotify,
+	//"OnlinePush.ReqPush":                           decodeOnlinePushReqPacket,
+	//"OnlinePush.PbPushTransMsg":                    decodeOnlinePushTransPacket,
+	//"ConfigPushSvc.PushReq":                        decodePushReqPacket,
+	//"MessageSvc.PbGetMsg":                          decodeMessageSvcPacket,
+	//"MessageSvc.PushForceOffline":                  decodeForceOfflinePacket,
+	//"PbMessageSvc.PbMsgWithDraw":                   decodeMsgWithDrawResponse,
+	//"friendlist.getFriendGroupList":                decodeFriendGroupListResponse,
+	//"friendlist.GetTroopListReqV2":                 decodeGroupListResponse,
+	//"friendlist.GetTroopMemberListReq":             decodeGroupMemberListResponse,
+	//"group_member_card.get_group_member_card_info": decodeGroupMemberInfoResponse,
+	"PttStore.GroupPttUp": decodeGroupPttStoreResponse,
+	//"LongConn.OffPicUp":                            decodeOffPicUpResponse,
+	//"ProfileService.Pb.ReqSystemMsgNew.Group":      decodeSystemMsgGroupPacket,
+	//"ProfileService.Pb.ReqSystemMsgNew.Friend":     decodeSystemMsgFriendPacket,
+	//"OidbSvc.0xe07_0":                              decodeImageOcrResponse,
+	//"OidbSvc.0xd79":                                decodeWordSegmentation,
+	//"OidbSvc.0x990":                                decodeTranslateResponse,
+	//"SummaryCard.ReqSummaryCard":                   decodeSummaryCardResponse,
+	//"LightAppSvc.mini_app_info.GetAppInfoById":     decodeAppInfoResponse,
 }
 
 func init() {
@@ -803,12 +809,17 @@ func (c *QQClient) send(pkt []byte) error {
 	return errors.Wrap(err, "Packet failed to send")
 }
 
-func (c *QQClient) sendAndWait(seq uint16, pkt []byte, params ...requestParams) (interface{}, error) {
-	type T struct {
-		Response interface{}
-		Error    error
+func (c *QQClient) GetSeq(seq uint16) (interface{}, error) {
+	info, ok := c.urlStore.LoadAndDelete(seq)
+	if !ok {
+		return nil, errors.New("Packet timed out")
+	} else {
+		ret := info.(*T)
+		return ret.Response, ret.Error
 	}
+}
 
+func (c *QQClient) sendAndWait(seq uint16, pkt []byte, params ...requestParams) (interface{}, error) {
 	err := c.send(pkt)
 	if err != nil {
 		return nil, err
@@ -920,7 +931,6 @@ func (c *QQClient) netLoop() {
 		}
 		errCount = 0
 		retry = 0
-		c.Debug("rev pkt: %v seq: %v", pkt.CommandName, pkt.SequenceId)
 		c.stat.PacketReceived++
 		go func() {
 			defer func() {
@@ -930,6 +940,7 @@ func (c *QQClient) netLoop() {
 			}()
 
 			if decoder, ok := decoders[pkt.CommandName]; ok {
+				c.Debug("rev pkt: %v seq: %v", pkt.CommandName, pkt.SequenceId)
 				// found predefined decoder
 				info, ok := c.handlers.LoadAndDelete(pkt.SequenceId)
 				rsp, err := decoder(c, &incomingPacketInfo{
@@ -949,12 +960,17 @@ func (c *QQClient) netLoop() {
 					info.fun(rsp, err)
 				} else if f, ok := c.waiters.Load(pkt.CommandName); ok { // 在不存在handler的情况下触发wait
 					f.(func(interface{}, error))(rsp, err)
+				} else if pkt.CommandName == "PttCenterSvr.ShortVideoDownReq" {
+					c.urlStore.Store(pkt.SequenceId, &T{
+						Response: rsp,
+						Error:    err,
+					})
 				}
 			} else if f, ok := c.handlers.LoadAndDelete(pkt.SequenceId); ok {
 				// does not need decoder
 				f.fun(nil, nil)
 			} else {
-				c.Debug("Unhandled Command: %s\nSeq: %d\nThis message can be ignored.", pkt.CommandName, pkt.SequenceId)
+				c.Debug("Unhandled Command: %s | Seq: %d", pkt.CommandName, pkt.SequenceId)
 			}
 		}()
 	}
