@@ -140,7 +140,7 @@ var decoders = map[string]func(*QQClient, *incomingPacketInfo, []byte) (interfac
 	//"MessageSvc.PushNotify":                        decodeSvcNotify,
 	//"OnlinePush.ReqPush":                           decodeOnlinePushReqPacket,
 	//"OnlinePush.PbPushTransMsg":                    decodeOnlinePushTransPacket,
-	"ConfigPushSvc.PushReq":                        decodePushReqPacket,
+	"ConfigPushSvc.PushReq": decodePushReqPacket,
 	//"MessageSvc.PbGetMsg":                          decodeMessageSvcPacket,
 	//"MessageSvc.PushForceOffline":                  decodeForceOfflinePacket,
 	//"PbMessageSvc.PbMsgWithDraw":                   decodeMsgWithDrawResponse,
