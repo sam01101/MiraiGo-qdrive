@@ -53,7 +53,6 @@ type QQClient struct {
 
 	handlers        HandlerMap
 	waiters         sync.Map
-	urlStore        sync.Map
 	servers         []*net.TCPAddr
 	currServerIndex int
 	retryTimes      int
@@ -809,16 +808,6 @@ func (c *QQClient) send(pkt []byte) error {
 	return errors.Wrap(err, "Packet failed to send")
 }
 
-func (c *QQClient) GetSeq(seq uint16) (interface{}, error) {
-	info, ok := c.urlStore.LoadAndDelete(seq)
-	if !ok {
-		return nil, errors.New("Packet timed out")
-	} else {
-		ret := info.(*T)
-		return ret.Response, ret.Error
-	}
-}
-
 func (c *QQClient) sendAndWait(seq uint16, pkt []byte, params ...requestParams) (interface{}, error) {
 	err := c.send(pkt)
 	if err != nil {
@@ -960,11 +949,6 @@ func (c *QQClient) netLoop() {
 					info.fun(rsp, err)
 				} else if f, ok := c.waiters.Load(pkt.CommandName); ok { // 在不存在handler的情况下触发wait
 					f.(func(interface{}, error))(rsp, err)
-				} else if pkt.CommandName == "PttCenterSvr.ShortVideoDownReq" {
-					c.urlStore.Store(pkt.SequenceId, &T{
-						Response: rsp,
-						Error:    err,
-					})
 				}
 			} else if f, ok := c.handlers.LoadAndDelete(pkt.SequenceId); ok {
 				// does not need decoder

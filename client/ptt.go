@@ -1,8 +1,6 @@
 package client
 
 import (
-	"bytes"
-	"crypto/md5"
 	"encoding/hex"
 	"io"
 	"os"
@@ -11,7 +9,6 @@ import (
 	"github.com/sam01101/MiraiGo-qdrive/binary"
 	"github.com/sam01101/MiraiGo-qdrive/client/pb"
 	"github.com/sam01101/MiraiGo-qdrive/client/pb/cmd0x346"
-	"github.com/sam01101/MiraiGo-qdrive/client/pb/msg"
 	"github.com/sam01101/MiraiGo-qdrive/client/pb/pttcenter"
 	"github.com/sam01101/MiraiGo-qdrive/message"
 	"github.com/sam01101/MiraiGo-qdrive/protocol/packets"
@@ -22,71 +19,6 @@ import (
 func init() {
 	decoders["PttCenterSvr.ShortVideoDownReq"] = decodePttShortVideoDownResponse
 	decoders["PttCenterSvr.GroupShortVideoUpReq"] = decodeGroupShortVideoUploadResponse
-}
-
-// UploadGroupPtt 将语音数据使用群语音通道上传到服务器, 返回 message.GroupVoiceElement 可直接发送
-func (c *QQClient) UploadGroupPtt(groupCode int64, voice io.ReadSeeker) (*message.GroupVoiceElement, error) {
-	h := md5.New()
-	length, _ := io.Copy(h, voice)
-	fh := h.Sum(nil)
-	_, _ = voice.Seek(0, io.SeekStart)
-	ext := c.buildGroupPttStoreBDHExt(groupCode, fh[:], int32(length), 0, int32(length))
-	rsp, err := c.highwayUploadByBDH(voice, 29, c.highwaySession.SigSession, ext, false)
-	if err != nil {
-		return nil, err
-	}
-	if len(rsp) == 0 {
-		return nil, errors.New("miss rsp")
-	}
-	pkt := pb.D388RespBody{}
-	if err = proto.Unmarshal(rsp, &pkt); err != nil {
-		return nil, errors.Wrap(err, "failed to unmarshal protobuf message")
-	}
-	if len(pkt.MsgTryUpPttRsp) == 0 {
-		return nil, errors.New("miss try up rsp")
-	}
-	return &message.GroupVoiceElement{
-		Ptt: &msg.Ptt{
-			FileType:     proto.Int32(4),
-			SrcUin:       &c.Uin,
-			FileMd5:      fh[:],
-			FileName:     proto.String(hex.EncodeToString(fh[:]) + ".amr"),
-			FileSize:     proto.Int32(int32(length)),
-			GroupFileKey: pkt.MsgTryUpPttRsp[0].FileKey,
-			BoolValid:    proto.Bool(true),
-			PbReserve:    []byte{8, 0, 40, 0, 56, 0},
-		}}, nil
-}
-
-// UploadPrivatePtt 将语音数据使用好友语音通道上传到服务器, 返回 message.PrivateVoiceElement 可直接发送
-func (c *QQClient) UploadPrivatePtt(target int64, voice []byte) (*message.PrivateVoiceElement, error) {
-	h := md5.Sum(voice)
-	ext := c.buildC2CPttStoreBDHExt(target, h[:], int32(len(voice)), int32(len(voice)))
-	rsp, err := c.highwayUploadByBDH(bytes.NewReader(voice), 26, c.highwaySession.SigSession, ext, false)
-	if err != nil {
-		return nil, err
-	}
-	if len(rsp) == 0 {
-		return nil, errors.New("miss rsp")
-	}
-	pkt := cmd0x346.C346RspBody{}
-	if err = proto.Unmarshal(rsp, &pkt); err != nil {
-		return nil, errors.Wrap(err, "failed to unmarshal protobuf message")
-	}
-	if pkt.ApplyUploadRsp == nil {
-		return nil, errors.New("miss apply upload rsp")
-	}
-	return &message.PrivateVoiceElement{
-		Ptt: &msg.Ptt{
-			FileType: proto.Int32(4),
-			SrcUin:   &c.Uin,
-			FileUuid: pkt.ApplyUploadRsp.Uuid,
-			FileMd5:  h[:],
-			FileName: proto.String(hex.EncodeToString(h[:]) + ".amr"),
-			FileSize: proto.Int32(int32(len(voice))),
-			// Reserve:   constructPTTExtraInfo(1, int32(len(voice))), // todo length
-			BoolValid: proto.Bool(true),
-		}}, nil
 }
 
 // UploadGroupShortVideo 将视频和封面上传到服务器, 返回 message.ShortVideoElement 可直接发送
@@ -156,16 +88,6 @@ func (c *QQClient) GetShortVideoUrl(uuid, md5 []byte) string {
 		return ""
 	}
 	return i.(string)
-}
-
-func (c *QQClient) GetShortVideoUrlSeq(uuid, md5 []byte) uint16 {
-	seq, pkt := c.buildPttShortVideoDownReqPacket(uuid, md5)
-	err := c.send(pkt)
-	if err != nil {
-		c.Error("Send short video url req failed: %v", err)
-		return 0
-	}
-	return seq
 }
 
 // PttStore.GroupPttUp
@@ -352,20 +274,4 @@ func decodeGroupShortVideoUploadResponse(_ *QQClient, _ *incomingPacketInfo, pay
 		return nil, errors.Errorf("ret code error: %v", rsp.PttShortVideoUploadRsp.RetCode)
 	}
 	return rsp.PttShortVideoUploadRsp, nil
-}
-
-func constructPTTExtraInfo(codec, length int32) []byte {
-	return binary.NewWriterF(func(w *binary.Writer) {
-		w.WriteByte(3)
-		w.WriteByte(8)
-		w.WriteUInt16(4)
-		w.WriteUInt32(uint32(codec))
-		w.WriteByte(9)
-		w.WriteUInt16(4)
-		w.WriteUInt32(uint32(14)) // length 时间
-		w.WriteByte(10)
-		info := []byte{0x08, 0x00, 0x28, 0x00, 0x38, 0x00} // todo
-		w.WriteUInt16(uint16(len(info)))
-		w.Write(info)
-	})
 }
